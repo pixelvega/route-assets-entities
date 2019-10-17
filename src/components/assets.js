@@ -2,12 +2,21 @@ import React, { useReducer, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
+let keys = [];
+let assets = [];
 function appReducer(state, action) {
   switch (action.type) {
     case 'save': {
-      console.log(action.payload)
+      let data = action.payload;
+      assets = data;
 
-      return action.payload;
+      if (data.length && !keys.length) {
+        for (const key in data[0]) {
+          keys.push(key);
+        }
+      }
+
+      return assets;
     }
 
     default: {
@@ -32,18 +41,43 @@ export default function Assets() {
 
   return (
     <div>
-      <div>ASSETS</div>
+      <h1>ASSETS</h1>
+      <table>
+        <TableHead keys={keys} />
+        <TableBody state={state} />
+      </table>
+    </div>
+  );
+}
+
+function TableHead({ keys }) {
+  return (
+    <thead>
+      <tr className="tr head">
+        {keys.map((key, i) => <th className="th" key={i}>{key}</th>)}
+        <th className="th action"></th>
+      </tr>
+    </thead>
+  );
+}
+
+function TableBody({ state }) {
+  return (
+    <tbody>
       {
-        state.map(item => {
+        state.map((item, i) => {
           return (
-            <Link to={`/entity/${item.id}`} key={item.id}>
-              <div className="item">
-                {item.id} - {item.t_street_name}
-              </div>
-            </Link>
+            <tr className="tr item" key={i}>
+              <td className="td">{item.id}</td>
+              <td className="td">{item.t_street_name}</td>
+              <td className="td">{item.n_number}</td>
+              <td className="td">{item.t_city}</td>
+              <td className="td">{item.t_code}</td>
+              <td className="td action"><Link to={`/entity/${item.id}`} key={item.id}>SEE</Link></td>
+            </tr>
           )
         })
       }
-    </div>
+    </tbody>
   );
 }
