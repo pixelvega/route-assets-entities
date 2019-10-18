@@ -1,8 +1,8 @@
 import React from 'react';
 import './App.css';
 import { Switch, Route } from 'react-router-dom';
-import Assets from './components/assets';
-import Entity from './components/entity';
+import Assets from './components/Assets';
+import Entity from './components/Entities';
 
 function App() {
 
