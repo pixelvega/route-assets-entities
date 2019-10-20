@@ -4,10 +4,11 @@ import { useParams } from 'react-router-dom';
 import TableHead from './TableHead';
 import TableBody from './TableBody';
 
-
 let entities = [];
 let keys = [];
 const path = 'entity';
+
+
 
 function appReducer(state, action) {
   switch (action.type) {
@@ -47,23 +48,20 @@ export default function Entity() {
 
   return (
     <div>
-      <h1>Entities</h1>
+      <h1>Entities: {entities.length} of id_asset: {id}</h1>
       {
         entities.length
           ?
-          entities.map((entity, i) => {
-            return (
-              <React.Fragment key={i}>
-                <table key={i}>
-                  <TableHead keys={keys} path={path} />
-                  <TableBody state={state} keys={keys} path={path} />
-                </table>
-              </React.Fragment>
-            );
-          })
+          <React.Fragment>
+            <table>
+              <TableHead keys={keys} path={path} />
+              <TableBody state={state} keys={keys} path={path} />
+            </table>
+          </React.Fragment>
           :
           <p>Loading data...</p>
       }
+
     </div>
   );
 }
