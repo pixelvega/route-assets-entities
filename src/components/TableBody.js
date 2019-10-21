@@ -56,7 +56,6 @@ export default function TableBody({ state, keys, path, Context }) {
                 null
               }
 
-
             </tr>
 
           )
