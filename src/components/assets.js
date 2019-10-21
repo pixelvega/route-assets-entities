@@ -1,12 +1,11 @@
 import React, { useReducer, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 import TableHead from './TableHead';
 import TableBody from './TableBody';
 
 let keys = [];
 let assets = [];
-let path = assets;
+let path = 'assets';
 
 function appReducer(state, action) {
   switch (action.type) {
@@ -29,6 +28,8 @@ function appReducer(state, action) {
   }
 }
 
+const Context = React.createContext();
+
 export default function Assets() {
   const [state, dispatch] = useReducer(appReducer, [])
   const ENDPOINT = 'https://6y458uslg3.execute-api.eu-west-3.amazonaws.com/elixos/assets';
@@ -44,17 +45,19 @@ export default function Assets() {
   }, [])
 
   return (
-    <div>
-      <h1>ASSETS</h1>
+    <div className="page-wrapper">
+      <h1 className="page-title">Assets</h1>
       {
         assets.length
           ?
-          <table>
-            <TableHead keys={keys} path={path} />
-            <TableBody state={state} keys={keys} path={path} />
-          </table>
+          <div>
+            <table>
+              <TableHead keys={keys} path={path} />
+              <TableBody state={state} keys={keys} path={path} Context={Context} />
+            </table>
+          </div>
           :
-          <p>Loading data...</p>
+          <p className="spinner">Loading data...</p>
       }
     </div>
   );
